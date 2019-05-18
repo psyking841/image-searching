@@ -1,0 +1,15 @@
+# Default values for sonarqube-charts.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+app:
+  name: searching-engine
+#  serviceConfigFileDir: /etc/service_config
+#  serviceConfigFileName: environment.cfg
+  port: 8543
+  replicas: 1
+
+serviceImage:
+  name: psyking841/searching-engine
+  tag: 0.1
+#  pullSecret: regcred
+  pullPolicy: Always

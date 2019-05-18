@@ -1,0 +1,108 @@
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: default-sources-volume
+spec:
+  capacity:
+    storage: 15Gi
+  accessModes:
+    - ReadWriteOnce
+  persistentVolumeReclaimPolicy: Retain
+  storageClassName: standard
+  hostPath:
+    path: "/Shares"
+#  nfs:
+#    # The address 192.168.99.1 is the Minikube gateway to the host. This way
+#    # not the container IP will be visible by the NFS server on the host machine,
+#    # but the IP address of the `minikube ip` command. You will need to
+#    # grant access to the `minikube ip` IP address.
+#    server: 192.168.39.93
+#    path: '/mnt/WDShares'
+#  mountOptions:
+#    - nfsvers=4.1
+---
+kind: PersistentVolumeClaim
+apiVersion: v1
+metadata:
+  name: sources-volume-claim
+  namespace: default
+spec:
+  storageClassName: standard
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 15Gi
+---
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: training
+spec:
+  replicas: 1
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      labels:
+        app: training
+        tier: app
+    spec:
+#      imagePullSecrets:
+#        - name: {{ .Values.serviceImage.pullSecret }}
+      containers:
+      - name: training
+        image: psyking841/searching-training:0.1
+        imagePullPolicy: Always
+        volumeMounts:
+#        - name: data-mount
+#          mountPath: "/training-data/"
+#          readOnly: false
+#        - name: model-mount
+#          mountPath: "/model/"
+#          readOnly: false
+#        - name: code-mount
+#          mountPath: "/python"
+#          readOnly: false
+#        - name: data-mount
+#          mountPath: "/data"
+#          readOnly: false
+        - name: shares
+          mountPath: /Shares
+        command: ["/bin/bash", "-c"]
+        args: ["tar zxf /Shares/demo/training_data.tar.gz -C  / && python /Shares/image-searching/python/training.py -i /bag_train -o /Shares/model"]
+#        args: ["python", "/Shares/image-searching/python/training.py", "-i", "/Shares/demo/bag_train/*.jpg", "-o", "/Shares/model"]
+#        args: ["tail", "-f", ">", "/dev/null"]
+#          ports:
+#            - containerPort: {{ .Values.app.port }}
+        resources:
+          limits:
+            memory: "16Gi"
+            cpu: "4"
+          requests:
+            memory: "8Gi"
+            cpu: "1"
+      volumes:
+      - name: shares
+        persistentVolumeClaim:
+          claimName: sources-volume-claim
+#      volumes:
+#      - name: data-mount
+#        hostPath:
+#          path: "/data"
+#      - name: code-mount
+#        hostPath:
+#          path: "/python"
+#      - name: data-mount
+#        hostPath:
+#          path: "/Users/shengyipan/demo/bag_train/"
+#      - name: model-mount
+#        hostPath:
+#          path: "/Users/shengyipan/demo/"
+#      - name: code-mount
+#        hostPath:
+#          path: "/Users/shengyipan/IdeaProjects/image-searching/python/"
+      restartPolicy: Always
+status: {}
+
