@@ -8,6 +8,10 @@ class SearchingEngine():
         self.index = self.create_index(index_csv_file)
 
     def create_index(self, index_csv_file):
+        """
+        index_csv_file: path to the csv file.
+        Create a dict from the csv file.
+        """
         index_dict = {}
         with open(index_csv_file) as csv_file:
             csv_reader = csv.reader(csv_file, delimiter=',')
