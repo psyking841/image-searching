@@ -21,7 +21,7 @@ class SearchingEngine():
                     print(f'Column names are {", ".join(row)}')
                     line_count += 1
                 else:
-                    print(f'\tSimilar items to {row[0]} are {row[1]}.')
+                    # print(f'\tSimilar items to {row[0]} are {row[1]}.')
                     index_dict[row[0]] = eval(row[1])
                     line_count += 1
             print(f'Processed {line_count} lines.')

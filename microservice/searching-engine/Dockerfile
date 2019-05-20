@@ -7,6 +7,7 @@ ENV APP_HOME /app
 WORKDIR $APP_HOME
 COPY app.py .
 COPY search.py .
+COPY templates/ ./templates/
 
 # Install production dependencies.
 RUN pip install Flask
@@ -15,4 +16,4 @@ RUN pip install Flask
 # This default value facilitates local development.
 ENV PORT 8543
 ENV REST_API_TOKEN "changeme"
-CMD ["python", "/app/app.py"]
+CMD ["python", "app.py"]

@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Search Results</title>
+</head>
+<body>
+
+The image you uploaded:
+<img src="{{ search_image }}" alt="Search Image">
+
+The result images:
+{% for res in results %}
+<img src="{{ url_for('custom_static', filename='foo') }}" alt="{{res}}">
+{% endfor %}
+</body>
+</html>
