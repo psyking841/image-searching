@@ -5,12 +5,17 @@
 </head>
 <body>
 
-The image you uploaded:
-<img src="{{ search_image }}" alt="Search Image">
+<section>
+    <h1>The image you uploaded:</h1>
+    <img src="{{ url_for('static', filename=search_image) }}" alt="Search Image">
+</section>
 
-The result images:
-{% for res in results %}
-<img src="{{ url_for('custom_static', filename='foo') }}" alt="{{res}}">
-{% endfor %}
+<section>
+    <h1>The similar images:</h1>
+    {% for res in results %}
+    <img src="{{ url_for('static', filename=res) }}" alt="{{ res }}">
+    {% endfor %}
+</section>
+
 </body>
 </html>

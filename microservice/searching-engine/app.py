@@ -6,6 +6,8 @@ from flask import Flask, request, jsonify, send_file, render_template
 from search import SearchingEngine
 import io
 
+IMAGES_DIR = os.environ.get('IMAGES_DIR')
+
 app = Flask(__name__)
 
 UPLOAD_FOLDER = tempfile.gettempdir()
@@ -16,7 +18,6 @@ app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 API_TOKEN = os.environ.get('REST_API_TOKEN')
 # This is the path to a CSV index file
 INDEX_FILE = os.environ.get('INDEX_FILE')
-IMAGES_DIR = os.environ.get('IMAGES_DIR')
 INDEX_DICT = SearchingEngine(index_csv_file=INDEX_FILE).index
 
 def allowed_file(filename):
@@ -86,14 +87,14 @@ def search():
 @app.route('/web/images/display_results')
 def display_results():
     image_name = request.args.get('image_name')
-    search_image = os.path.join(IMAGES_DIR, image_name)
+    #search_image = os.path.join(IMAGES_DIR, image_name)
     similar_files = INDEX_DICT.get(image_name)
-    results = [os.path.join(IMAGES_DIR, i) for i in similar_files]
+    results = [i for i in similar_files]
     if not similar_files:
         return jsonify(isError=True,
                        message='No similar images are found, double check your file name!',
                        statusCode=404), 404
-    return render_template("results.html", search_image=search_image, results=results)
+    return render_template("results.html", search_image=image_name, results=results)
 
 if __name__ == "__main__":
     app.run(debug=True, host='0.0.0.0', port=int(os.environ.get('PORT', 8543)))

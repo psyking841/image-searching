@@ -10,7 +10,8 @@ COPY search.py .
 COPY templates/ ./templates/
 
 # Install production dependencies.
-RUN pip install Flask
+RUN pip install Flask && \
+    ln -s /demo/bag_test $APP_HOME/static
 
 # Service must listen to $PORT environment variable.
 # This default value facilitates local development.

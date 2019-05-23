@@ -3,7 +3,7 @@
 ### Command to run the image
 ```$bash
 docker run -v /Users/shengyipan/demo/:/demo/ -e INDEX_FILE=/demo/final_result.csv \
--e IMAGES_DIR=/demo/bag_test -p 8543:8543 --rm -d psyking841/searching-engine:0.1
+-e IMAGES_DIR=/demo/bag_test/ -p 8543:8543 --rm -d psyking841/searching-engine:0.1
 ```
 
 ### Python Example
