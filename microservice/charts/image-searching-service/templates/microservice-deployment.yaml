@@ -21,11 +21,9 @@ spec:
           env:
             - name: INDEX_FILE
               value: "/demo/final_result.csv"
+            - name:
             - name: REST_API_TOKEN
-              valueFrom:
-                secretKeyRef:
-                  name: {{ .Values.app.name }}-secret-{{ .Values.environment }}
-                  key: rest_api_token
+              value: "changeme"
           ports:
             - containerPort: {{ .Values.app.port }}
           resources:

@@ -2,11 +2,12 @@
 
 import os
 import tempfile
-from flask import Flask, request, jsonify, send_file, render_template
+from flask import Flask, redirect, url_for, request, jsonify, send_file, render_template
 from search import SearchingEngine
+from models import Image
 import io
 
-IMAGES_DIR = os.environ.get('IMAGES_DIR')
+IMAGES_DIR = os.environ.get('IMAGES_DIR') or "/Users/shengyipan/WDShares/demo/bag_test"
 
 app = Flask(__name__)
 
@@ -17,7 +18,7 @@ app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 # Path to the addtional config file that contains additional running environment related configurations
 API_TOKEN = os.environ.get('REST_API_TOKEN')
 # This is the path to a CSV index file
-INDEX_FILE = os.environ.get('INDEX_FILE')
+INDEX_FILE = os.environ.get('INDEX_FILE') or "/Users/shengyipan/WDShares/demo/final_result.csv"
 INDEX_DICT = SearchingEngine(index_csv_file=INDEX_FILE).index
 
 def allowed_file(filename):
@@ -84,7 +85,12 @@ def search():
                        message='Job completed',
                        statusCode=200), 200
 
-@app.route('/web/images/display_results')
+@app.route('/ui')
+def index():
+    images = Image.sample(IMAGES_DIR)
+    return render_template('demo.html', images=images)
+
+@app.route('/ui/images/display_results')
 def display_results():
     image_name = request.args.get('image_name')
     #search_image = os.path.join(IMAGES_DIR, image_name)
@@ -97,4 +103,5 @@ def display_results():
     return render_template("results.html", search_image=image_name, results=results)
 
 if __name__ == "__main__":
+    app.logger.info('Listening on http://localhost:8543')
     app.run(debug=True, host='0.0.0.0', port=int(os.environ.get('PORT', 8543)))

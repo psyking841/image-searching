@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Product Gallery</title>
+        <meta http-equiv="Content-type" content="text/html; charset=utf-8">
+    </head>
+    <body>
+        <style>
+        .item {
+            float:left;
+            width:220px;
+            margin:10px;
+        }
+        </style>
+<!--        <input id="file_uploader" type="file" name="file"/>-->
+        <script type="text/javascript" src="{{ url_for('static', filename='jquery.min.js') }}"></script>
+        <script type="text/javascript" src="{{ url_for('static', filename='jquery.masonry.min.js') }}"></script>
+
+
+        <ul id="container">
+            {% for image in images %}
+            <img class="item" src="{{ url_for('static', filename=['bag_test', image.filename ]|join('/')) }}"/>
+            {% endfor %}
+        </ul>
+    </body>
+</html>

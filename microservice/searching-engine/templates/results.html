@@ -7,13 +7,13 @@
 
 <section>
     <h1>The image you uploaded:</h1>
-    <img src="{{ url_for('static', filename=search_image) }}" alt="Search Image">
+    <img src="{{ url_for('static', filename=['bag_test', search_image ]|join('/')) }}" alt="Search Image">
 </section>
 
 <section>
     <h1>The similar images:</h1>
     {% for res in results %}
-    <img src="{{ url_for('static', filename=res) }}" alt="{{ res }}">
+    <img src="{{ url_for('static', filename=['bag_test', res ]|join('/')) }}" alt="{{ res }}">
     {% endfor %}
 </section>
 

@@ -1,6 +1,6 @@
 # Searching Engine Service
 
-### Command to run the image
+### Command to run the image in Docker
 ```$bash
 docker run -v /Users/shengyipan/demo/:/demo/ -e INDEX_FILE=/demo/final_result.csv \
 -e IMAGES_DIR=/demo/bag_test/ -p 8543:8543 --rm -d psyking841/searching-engine:0.1
@@ -69,4 +69,4 @@ Parameters:
 * image_name - string - The name of the image to search on
 
 Example:
-http://{HOST}:{PORT}/web/images/display_results?image_name=bag_220_5.jpg
+http://{HOST}:{PORT}/ui/images/display_results?image_name=bag_220_5.jpg
