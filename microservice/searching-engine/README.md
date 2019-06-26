@@ -63,7 +63,7 @@ wget -O bag_216_23.jpg http://localhost:8543/images/get?image_name=bag_216_23.jp
 ## Web Interface
 ### Display search results for a specific image
 
-URL: http://{HOST}:{PORT}/web/images/display_results
+URL: http://{HOST}:{PORT}/ui/images/display_results
 
 Parameters: 
 * image_name - string - The name of the image to search on

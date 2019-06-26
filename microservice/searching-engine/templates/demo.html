@@ -19,7 +19,7 @@
 
         <ul id="container">
             {% for image in images %}
-            <img class="item" src="{{ url_for('static', filename=['bag_test', image.filename ]|join('/')) }}"/>
+            <a href="{{ url_for('display_results', image_name=image.filename) }}"/><img class="item" src="{{ url_for('static', filename=['bag_test', image.filename ]|join('/')) }}"/>
             {% endfor %}
         </ul>
     </body>
