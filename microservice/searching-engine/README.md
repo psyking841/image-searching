@@ -1,5 +1,11 @@
 # Searching Engine Service
 
+### Command to build the image
+```
+# In the same dir of Dockerfile and run:
+docker build -t psyking841/searching-engine:0.1 .
+```
+
 ### Command to run the image in Docker
 ```$bash
 docker run -v /Users/shengyipan/demo/:/demo/ -e INDEX_FILE=/demo/final_result.csv \
